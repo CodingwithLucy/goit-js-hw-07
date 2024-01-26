@@ -1,1 +1,1 @@
-# goit-js-hw-07
+https://codingwithlucy.github.io/goit-js-hw-07/
