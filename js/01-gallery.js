@@ -6,12 +6,12 @@ const gallery = document.querySelector(".gallery");
 
 const fullGallery = galleryItems.map((galleryItem) => 
     `<div class="gallery__item">
-    <a class="gallery__link" onclick="return false" href="${galleryItem.original}">
+    <a class="gallery__link" href="${galleryItem.original}">
       <img
         class="gallery__image"
         src="${galleryItem.preview}"
         data-source="${galleryItem.original}"
-        alt="${galleryItem.decription}"
+        alt="${galleryItem.description}"
       />
     </a>
     </div>`
@@ -19,6 +19,7 @@ const fullGallery = galleryItems.map((galleryItem) =>
 
 gallery.insertAdjacentHTML("afterbegin", fullGallery);
 
+function addModal() {
 const zoom = document.querySelectorAll(".gallery__item");
 
 zoom.forEach((item, index) => {
@@ -27,6 +28,21 @@ zoom.forEach((item, index) => {
   const instance = basicLightbox.create(`
     <img src="${galleryItems[index].original}" width="800" height="600">
 `);
-instance.show();
+
+document.addEventListener("keydown", closeModalOnEscape);
+
+instance.show(() => {
+  document.removeEventListener("keydown", closeModalOnEscape);
+});
+
+function closeModalOnEscape(event) {
+  if (event.key === "Escape") {
+    instance.close();
+    document.removeEventListener("keydown", closeModalOnEscape);
+  }
+}
 });
 });
+}
+
+addModal();
