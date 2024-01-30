@@ -26,14 +26,7 @@ zoom.forEach((item, index) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
   const instance = basicLightbox.create(`
-    <img src="${galleryItems[index].original}" width="800" height="600">
-`);
-
-document.addEventListener("keydown", closeModalOnEscape);
-
-instance.show(() => {
-  document.removeEventListener("keydown", closeModalOnEscape);
-});
+    <img src="${galleryItems[index].original}" width="800" height="600">`);
 
 function closeModalOnEscape(event) {
   if (event.key === "Escape") {
@@ -41,6 +34,10 @@ function closeModalOnEscape(event) {
     document.removeEventListener("keydown", closeModalOnEscape);
   }
 }
+
+document.addEventListener("keydown", closeModalOnEscape);
+
+instance.show();
 });
 });
 }
