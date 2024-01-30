@@ -14,4 +14,4 @@ const fullGallery = galleryItems.map((galleryItem) =>
 
 gallery.insertAdjacentHTML("afterbegin", fullGallery);
 
-let lightbox = new SimpleLightbox(".gallery a", { captions: true, captionData: "alt", captionType: "attr", captionDelay: 250, captionPosition: "bottom", captionSelector: "img" });
+let lightbox = new SimpleLightbox(".gallery a", {captionsData: "alt", captionDelay: 250});
