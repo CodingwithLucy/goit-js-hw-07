@@ -19,27 +19,28 @@ const fullGallery = galleryItems.map((galleryItem) =>
 
 gallery.insertAdjacentHTML("afterbegin", fullGallery);
 
-function addModal() {
-const zoom = document.querySelectorAll(".gallery__item");
-
-zoom.forEach((item, index) => {
-  item.addEventListener("click", (event) => {
+function addModal(event) {
+  const target = event.target;
+  if (target && target.nodeName === "IMG") {
     event.preventDefault();
-  const instance = basicLightbox.create(`
-    <img src="${galleryItems[index].original}" width="800" height="600">`);
+    const instance = basicLightbox.create(`
+      <img src="${target.dataset.source}" width="800" height="600">`, {
+        onShow: (instance) => {
+          document.addEventListener("keydown", closeModalOnEscape);
+        },
+        onClose: (instance) => {
+          document.removeEventListener("keydown", closeModalOnEscape);
+        }
+      });
 
-function closeModalOnEscape(event) {
-  if (event.key === "Escape") {
-    instance.close();
-    document.removeEventListener("keydown", closeModalOnEscape);
+      function closeModalOnEscape(event) {
+        if (event.key === "Escape") {
+          instance.close();
+        }
+      }
+  
+      instance.show();
+    }
   }
-}
-
-document.addEventListener("keydown", closeModalOnEscape);
-
-instance.show();
-});
-});
-}
-
-addModal();
+  
+  gallery.addEventListener("click", addModal);
